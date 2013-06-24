@@ -101,7 +101,7 @@ define( [
   // Return exports.
   return {
     CheckboxChoice: CheckboxChoice,
-    ChecboxChoices: CheckboxChoices,
+    CheckboxChoices: CheckboxChoices,
     CheckboxChoiceView: CheckboxChoiceView,
     CheckboxChoicesView: CheckboxChoicesView
   };
