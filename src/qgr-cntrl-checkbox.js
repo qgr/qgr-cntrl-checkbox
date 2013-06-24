@@ -43,7 +43,7 @@ define( [
 
     render: function() {
       var render_content = this.tmpl({
-        label: this.eq_type.get('equipment_type'),
+        label: this.choice.get('choice_val'),
       })
       this.$el.html(render_content);
       return this
@@ -51,7 +51,7 @@ define( [
 
     set_choice: function(e) {
       var checked = this.$el.find('input').prop('checked');
-      this.eq_type.set('checked', checked)
+      this.choice.set('checked', checked)
     },
 
     clicked: function(e) {
