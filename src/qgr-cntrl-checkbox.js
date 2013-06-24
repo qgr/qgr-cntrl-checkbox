@@ -6,14 +6,6 @@ define( [
   ],
   function (_, $, Backbone, checkbox_tmpl) {
 
-  var exports;
-  exports = {
-    CheckboxChoice: CheckboxChoice,
-    ChecboxChoices: CheckboxChoices,
-    CheckboxChoiceView: CheckboxChoiceView,
-    CheckboxChoicesView: CheckboxChoicesView
-  }
-
   var CheckboxChoice = Backbone.Model.extend({
     // Has attr choice_val
 
@@ -106,7 +98,13 @@ define( [
 
   });
 
-  return exports;
+  // Return exports.
+  return {
+    CheckboxChoice: CheckboxChoice,
+    ChecboxChoices: CheckboxChoices,
+    CheckboxChoiceView: CheckboxChoiceView,
+    CheckboxChoicesView: CheckboxChoicesView
+  };
 
 });
 
