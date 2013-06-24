@@ -1,10 +1,10 @@
 define( [
+    'jquery',
     'underscore',
-    'Backbone',
-    'zepto',
+    'backbone',
     'text!tmpl/checkbox.html'
   ],
-  function (_, $, Backbone, checkbox_tmpl) {
+  function ($, _, Backbone, checkbox_tmpl) {
 
   var CheckboxChoice = Backbone.Model.extend({
     // Has attr choice_val
