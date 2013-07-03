@@ -1,11 +1,12 @@
-define( [
-    'jquery',
-    'underscore',
-    'backbone',
-    'handlebars',
-    'text!tmpl/checkbox.html'
-  ],
-  function ($, _, Backbone, Handlebars, checkbox_tmpl) {
+// qgr-cntrl-checkbox
+
+define(function (require) {
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+  var Handlebars = require('handlebars');
+  var checkbox_tmpl = require('text!tmpl/checkbox.html');
+
 
   var CheckboxChoice = Backbone.Model.extend({
     // Has attr choice_val
@@ -19,6 +20,24 @@ define( [
   var CheckboxChoices = Backbone.Collection.extend({
 
     model: CheckboxChoice,
+
+    initialize: function(models, options) {
+      this.col = options.col;
+    },
+
+    get_subtree: function() {
+      // This collection is represented as an 'in' clause in the query tree.
+      var filtered = this.where({checked: true});
+      var in_list = _.map(filtered, function(c) {
+        return c.get('choice_val');
+      });
+      return {
+        in: [
+          this.col,
+          in_list
+        ]
+      };
+    }
 
   });
 
@@ -68,12 +87,10 @@ define( [
     initialize: function(options) {
       // Initialize with a CheckboxChoices collection and a ref to the
       // global_q object, and the target column.
-      _.bindAll(this, 'render', 'set_filters')
+      _.bindAll(this, 'render')
       this.choices = this.options.choices;
       this.global_q = this.options.global_q;
-      this.col = this.options.col;
       this.choices.on('reset', this.render);
-      this.choices.on('change', this.set_filters);
     },
 
     render: function() {
@@ -81,19 +98,6 @@ define( [
       this.choices.each(function(c) {
         var choice_view = new CheckboxChoiceView({choice: c});
         $el.append(choice_view.render().el);
-      });
-    },
-
-    set_filters: function() {
-      // This control is represented as an 'in' clause.
-      var filtered = this.choices.where({checked: true});
-      var in_list = _.map(filtered, function(c) {
-        return c.get('choice_val');
-      });
-      this.global_q.set('w', {
-        col: this.col,
-        op: 'in',
-        other: in_list,
       });
     }
 
