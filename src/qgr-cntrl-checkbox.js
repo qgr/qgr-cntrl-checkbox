@@ -94,11 +94,22 @@ define(function (require) {
     },
 
     render: function() {
+      var t = this;
       var $el = this.$el;
-      this.choices.each(function(c) {
+      t.subviews = [];
+      t.choices.each(function(c) {
         var choice_view = new CheckboxChoiceView({choice: c});
+        t.subviews.push(choice_view);
         $el.append(choice_view.render().el);
       });
+      return this;
+    },
+
+    teardown: function() {
+      _.each(this.subviews, function(v) { v.remove() });
+      this.$el.remove();
+      this.stopListening();
+      return this;
     }
 
   });
